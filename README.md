@@ -1,4 +1,4 @@
-# Assistant coach agent with Azure AI Agent Service, Semantic Kernel and more
+# Basketball coach AI agent demo repository
 
 Demo code for Azure AI Agent Service intro post on https://beyondelastic.github.io/posts/agent/ in folder /src/app1/
 
