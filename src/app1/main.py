@@ -9,6 +9,7 @@ from pathlib import Path
 load_dotenv()
 PROJECT_CONNECTION_STRING = os.getenv("AZURE_AI_AGENT_PROJECT_CONNECTION_STRING")
 MODEL_DEPLOYMENT = os.getenv("AZURE_AI_AGENT_MODEL_DEPLOYMENT_NAME")
+FILE_PATH = Path(__file__).parent.parent / os.getenv("NBA_CSV_FILE_PATH")  # Adjusted to resolve relative path
 
 # create ai project client
 project_client = AIProjectClient.from_connection_string(
@@ -19,7 +20,7 @@ with project_client:
 
     # upload a file and add it to the client 
     file = project_client.agents.upload_file_and_poll(
-        file_path="nba3p.csv", purpose=FilePurpose.AGENTS
+        file_path=FILE_PATH, purpose=FilePurpose.AGENTS
     )
     print(f"Uploaded file, file ID: {file.id}")
 
