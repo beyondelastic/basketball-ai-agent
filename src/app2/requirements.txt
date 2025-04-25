@@ -1,0 +1,4 @@
+# Core requirements for app.py
+python-dotenv
+azure-identity
+semantic-kernel
