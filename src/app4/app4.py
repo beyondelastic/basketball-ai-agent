@@ -52,7 +52,7 @@ with project_client:
         )
         
         # Define the path to the file to be uploaded
-        file_path = "./data/31-Basketball-Drills-and-Games-for-Kids.pdf"  # Adjust the path as needed
+        file_path = "./data/DBB_Jugend_Minileitfaden.pdf"  # Adjust the path as needed
 
         # Upload the file
         file = project_client.agents.files.upload_and_poll(file_path=file_path, purpose=FilePurpose.AGENTS)
