@@ -1,0 +1,7 @@
+# Requirements for src/app4/app4.py
+python-dotenv
+azure-identity
+azure-ai-projects
+azure-ai-agents
+azure-monitor-opentelemetry
+opentelemetry-api

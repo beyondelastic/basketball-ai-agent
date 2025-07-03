@@ -14,6 +14,7 @@ load_dotenv()
 AZURE_OPENAI_KEY = os.getenv("AZURE_OPENAI_KEY")
 AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
 AZURE_OPENAI_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION")
 
 async def main():
    # Initialize the kernel
@@ -24,6 +25,7 @@ async def main():
       deployment_name=AZURE_OPENAI_DEPLOYMENT,
       api_key=AZURE_OPENAI_KEY,
       endpoint=AZURE_OPENAI_ENDPOINT,
+      api_version=AZURE_OPENAI_API_VERSION,
    )
    kernel.add_service(chat_completion)
 
