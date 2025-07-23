@@ -1,0 +1,4 @@
+# Core requirements for app2-modular
+python-dotenv
+azure-identity
+semantic-kernel
