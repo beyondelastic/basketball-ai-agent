@@ -2,76 +2,74 @@
 
 ## Overview
 
-App5 demonstrates a multi-agent basketball coaching system using the Azure AI Agent Framework with Magnetics orchestration. The system features two specialized AI agents that collaborate to provide comprehensive basketball strategy advice:
+Clean, modular implementation of a multi-agent basketball coaching system using Azure AI Agent Framework with proper resource management.
 
-- **Head Coach Agent**: Specializes in offensive strategies and overall game planning
-- **Assistant Coach Agent**: Focuses on defensive strategies and adjustments
+## Project Structure
 
-## Architecture
+```
+src/app5/
+├── app5.py          # Main application entry point
+├── config.py        # Configuration settings and constants
+├── agents.py        # Agent definitions and creation functions
+├── events.py        # Event handling for workflow callbacks
+├── workflow.py      # Workflow orchestration and resource management
+└── requirements.txt # Python dependencies
+```
 
-### Agent Collaboration Model
-The agents use a workflow-based collaboration where:
-1. Both agents receive the same task/situation
-2. They collaborate through the Magnetics orchestrator
-3. The Head Coach leads the decision-making but consults the Assistant Coach for defensive matters
-4. The system produces a coordinated final game plan
+## Key Features
 
-### Key Features
-- **Streaming responses**: Real-time feedback as agents think and collaborate
-- **Event-driven architecture**: Comprehensive event handling for orchestration, agent messages, and final results
-- **Role-based specialization**: Clear separation of responsibilities between coaches
-- **Error handling**: Robust error management for production use
-
-## Code Structure
-
-### Main Components
-
-1. **Agent Definitions**
-   - `HEAD_COACH_NAME` & `ASSISTANT_COACH_NAME`: Agent identifiers
-   - `HEAD_COACH_INSTRUCTIONS` & `ASSISTANT_COACH_INSTRUCTIONS`: Detailed role specifications
-
-2. **Agent Factory**
-   - `create_agents()`: Creates and configures the coaching agents
-
-3. **Event Handling**
-   - `on_event()`: Processes different types of workflow events
-   - Handles orchestrator messages, agent responses, and final results
-
-4. **Workflow Management**
-   - `run_basketball_coaching_workflow()`: Main orchestration function
-   - `MagenticBuilder`: Configures the multi-agent workflow
-   - `workflow.run_stream()`: Executes the collaborative process
-
-### Configuration Options
-- `max_round_count=10`: Maximum collaboration rounds
-- `max_stall_count=3`: Maximum rounds without progress before intervention
-- `max_reset_count=2`: Maximum plan resets allowed
+- **Clean Architecture**: Modular design with separation of concerns
+- **Proper Resource Management**: Uses context managers for automatic cleanup
+- **Shared Client Pattern**: Single Azure client instance for all agents and manager
+- **Exception Safety**: Robust error handling with guaranteed resource cleanup
+- **Simple Usage**: Easy-to-understand code structure
 
 ## Usage
 
-### Prerequisites
-1. Install dependencies: `pip install -r requirements.txt`
-2. Configure Azure credentials (ensure `az login` is completed)
-3. Set up environment variables in `.env` file if needed
-
-### Running the Application
+### Basic Usage
 ```bash
-cd src/app5
-python3 app5.py
+python app5.py
 ```
 
-### Expected Flow
-1. System initializes both coaching agents
-2. The task is presented to the workflow
-3. Agents collaborate in real-time with streaming output:
-   - Orchestrator messages show planning
-   - Agent messages show individual responses
-   - Delta events show streaming text
-4. Final coordinated strategy is presented
+### Custom Task
+```bash
+python app5.py "We need help with our defense against pick and roll plays"
+```
 
-## Sample Task
-The default task simulates a common basketball scenario:
-> "We are playing zone defense and the other team just scored 10 points in a row. We need to change our strategy to stop them. What should we do?"
+## Architecture Benefits
+
+### 1. **Context Manager Pattern**
+- Automatic resource cleanup (no more "unclosed client session" warnings)
+- Exception-safe resource management
+- Clear lifecycle management
+
+### 2. **Shared Client Architecture**
+- Single `AzureAIAgentClient` instance for all agents and workflow manager
+- Reduced resource overhead
+- Better connection pooling
+
+### 3. **Modular Design**
+- **config.py**: All configuration in one place
+- **agents.py**: Agent definitions and creation logic
+- **events.py**: Event handling separated from business logic
+- **workflow.py**: Complete workflow orchestration with resource management
+- **app5.py**: Clean entry point
+
+### 4. **Resource Management**
+```python
+# Automatic cleanup with context manager
+async with BasketballCoachingWorkflow() as workflow:
+    result = await workflow.run(task)
+# Resources automatically cleaned up here
+```
+
+## Technical Improvements
+
+1. **Fixed Resource Leaks**: Context manager ensures proper cleanup
+2. **Simplified Client Management**: Single shared client instance
+3. **Better Error Handling**: Comprehensive exception management
+4. **Cleaner Code**: Separated concerns into logical modules
+5. **Type Safety**: Clear function signatures and return types
 
 ## Agent Behavior
 
@@ -89,31 +87,15 @@ The default task simulates a common basketball scenario:
 - Supports Head Coach's final decisions
 - Responses prefixed with "assistant_coach > "
 
-## Error Handling
-- Import fallbacks for optional framework components
-- Comprehensive exception handling in main workflow
-- Graceful degradation if certain events aren't available
+## Dependencies
 
-## Testing
-Run the structure test to validate the code organization:
-```bash
-python3 test_structure.py
-```
-
-## Troubleshooting
-
-### Common Issues
-1. **Import Errors**: Ensure `agent-framework` is properly installed
-2. **Authentication**: Verify Azure CLI login status
-3. **Event Handling**: Some events might not be available in all framework versions
-
-### Dependencies
-- `python-dotenv`: Environment variable management
-- `azure-identity`: Azure authentication
 - `agent-framework`: Core AI agent functionality
+- `azure-identity`: Azure authentication
+- `python-dotenv`: Environment variable management
 
 ## Future Enhancements
-- Add more specialized coaching roles (e.g., Analytics Coach)
-- Implement game situation templates
-- Add persistent conversation history
-- Integrate with real basketball data sources
+
+- Easy to extend with new agent types
+- Simple to add new event handlers
+- Configuration can be externalized to files
+- Easy to add DevUI integration as separate module
