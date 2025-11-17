@@ -1,5 +1,9 @@
 # Core requirements for app5.py
 python-dotenv>=1.0.0
 azure-identity>=1.15.0
-agent-framework>=1.0.0
-# Note: You may need to adjust the agent-framework version based on your actual framework
+agent-framework-azure-ai --pre
+# Note: The --pre flag is required while Agent Framework is in preview
+
+# Observability requirements
+azure-ai-projects
+azure-ai-agents

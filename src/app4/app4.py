@@ -12,8 +12,8 @@ from azure.monitor.opentelemetry import configure_azure_monitor
 from opentelemetry import trace
 
 load_dotenv()
-PROJECT_ENDPOINT = os.getenv("AZURE_AI_AGENT_ENDPOINT")
-MODEL_DEPLOYMENT = os.getenv("AZURE_AI_AGENT_MODEL_DEPLOYMENT_NAME")
+PROJECT_ENDPOINT = os.getenv("AZURE_AI_PROJECT_ENDPOINT")
+MODEL_DEPLOYMENT = os.getenv("AZURE_AI_MODEL_DEPLOYMENT_NAME")
 BING_CONNECTION_NAME = os.getenv("BING_CONNECTION_NAME")
 
 # Create ai project client
@@ -21,7 +21,7 @@ project_client = AIProjectClient(
   endpoint=PROJECT_ENDPOINT,
   credential=DefaultAzureCredential()
 )
-connection_string = project_client.telemetry.get_connection_string()
+connection_string = project_client.telemetry.get_application_insights_connection_string()
 
 if not connection_string:
     print("Application Insights is not enabled. Enable by going to Tracing in your Azure AI Foundry project.")

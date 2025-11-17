@@ -1,0 +1,4 @@
+# Requirements for Azure AI Foundry Cleanup Script
+azure-ai-projects>=1.0.0
+azure-identity>=1.15.0
+python-dotenv>=1.0.0

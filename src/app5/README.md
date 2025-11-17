@@ -87,11 +87,39 @@ async with BasketballCoachingWorkflow() as workflow:
 - Supports Head Coach's final decisions
 - Responses prefixed with "assistant_coach > "
 
+## Observability & Tracing
+
+This application includes integrated Azure Application Insights observability for monitoring multi-agent conversations and performance.
+
+### Setup
+1. Copy `.env.example` to `.env`
+2. Set your Azure AI Foundry project configuration:
+   ```
+   AZURE_AI_PROJECT_ENDPOINT=https://your-project.eastus2.api.azureml.ms
+   AZURE_AI_MODEL_DEPLOYMENT_NAME=gpt-4.1
+   ```
+3. Ensure Application Insights is connected to your Azure AI Foundry project
+
+### Features
+- **End-to-End Tracing**: Full workflow visibility from request to completion
+- **Agent Performance Monitoring**: Individual agent response times and interactions
+- **Custom Spans**: Basketball-specific metrics and attributes
+- **Trace Correlation**: Each run includes a Trace ID for easy debugging
+- **Application Insights Integration**: Automatic telemetry data collection
+
+### Trace Information
+Each workflow run displays a Trace ID that can be used to correlate logs in Application Insights:
+```
+🔍 Trace ID: 1234567890abcdef1234567890abcdef
+```
+
 ## Dependencies
 
 - `agent-framework`: Core AI agent functionality
 - `azure-identity`: Azure authentication
 - `python-dotenv`: Environment variable management
+- `azure-ai-projects`: Azure AI Foundry project integration
+- `azure-ai-agents`: Azure AI agents client library
 
 ## Future Enhancements
 
